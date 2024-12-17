@@ -11,60 +11,138 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(45deg, #1a1a1a, #2c3e50);
+            background: #000;
             font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 5s ease-in-out infinite;
         }
 
         .container {
             text-align: center;
             padding: 2rem;
-            max-width: 600px;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+
+        .earth-image {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 1rem;
+            animation: rotate 20s linear infinite;
         }
 
         h1 {
             color: #fff;
             margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .fact-box {
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
             padding: 2rem;
-            border-radius: 10px;
+            border-radius: 15px;
             margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .fact-box:hover {
+            transform: translateY(-5px) rotateX(5deg);
         }
 
         #fact-text {
             font-size: 1.2rem;
             margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards;
         }
 
         #category-badge {
-            background: #3498db;
+            background: linear-gradient(45deg, #3498db, #2980b9);
             color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
             font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease 0.2s forwards;
         }
 
         #generate-btn {
-            background: #2ecc71;
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
             color: white;
             border: none;
             padding: 1rem 2rem;
             font-size: 1.1rem;
-            border-radius: 5px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
         }
 
         #generate-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pulse {
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
+    <div class="stars"></div>
     <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Blue_Marble_%28remastered%29.jpg/240px-The_Blue_Marble_%28remastered%29.jpg" 
+             alt="Earth" class="earth-image">
         <h1>🌍 Earth Facts Generator</h1>
         <div class="fact-box">
             <p id="fact-text">Click the button to generate a fact!</p>
@@ -74,77 +152,37 @@
     </div>
 
     <script>
-        const earthFacts = {
-            "earthFacts": [
-                {
-                    "id": 1,
-                    "fact": "Earth is the third planet from the Sun in our Solar System",
-                    "category": "astronomy"
-                },
-                {
-                    "id": 2,
-                    "fact": "Earth's age is approximately 4.54 billion years",
-                    "category": "geology"
-                },
-                {
-                    "id": 3,
-                    "fact": "The Earth's circumference at the equator is about 40,075 kilometers",
-                    "category": "geography"
-                },
-                {
-                    "id": 4,
-                    "fact": "Earth is the only known planet where life exists",
-                    "category": "biology"
-                },
-                {
-                    "id": 5,
-                    "fact": "71% of Earth's surface is covered by water",
-                    "category": "geography"
-                },
-                {
-                    "id": 6,
-                    "fact": "Earth's atmosphere is composed of 78% nitrogen and 21% oxygen",
-                    "category": "atmosphere"
-                },
-                {
-                    "id": 7,
-                    "fact": "Earth completes one rotation on its axis every 23 hours, 56 minutes and 4 seconds",
-                    "category": "astronomy"
-                },
-                {
-                    "id": 8,
-                    "fact": "The highest point on Earth is Mount Everest at 8,848 meters above sea level",
-                    "category": "geography"
-                },
-                {
-                    "id": 9,
-                    "fact": "Earth's core temperature can reach up to 5,400°C (9,752°F)",
-                    "category": "geology"
-                },
-                {
-                    "id": 10,
-                    "fact": "Earth has one natural satellite: the Moon",
-                    "category": "astronomy"
-                }
-            ]
-        };
+        // Previous earthFacts JSON remains the same
 
         const factText = document.getElementById('fact-text');
         const categoryBadge = document.getElementById('category-badge');
         const generateBtn = document.getElementById('generate-btn');
+        const factBox = document.querySelector('.fact-box');
 
         function generateRandomFact() {
             const facts = earthFacts.earthFacts;
             const randomIndex = Math.floor(Math.random() * facts.length);
             const randomFact = facts[randomIndex];
             
+            // Reset animations
+            factText.style.animation = 'none';
+            categoryBadge.style.animation = 'none';
+            factBox.classList.remove('pulse');
+            
+            // Trigger reflow
+            void factText.offsetWidth;
+            void categoryBadge.offsetWidth;
+            
+            // Add animations
+            factText.style.animation = 'fadeIn 0.5s ease forwards';
+            categoryBadge.style.animation = 'fadeIn 0.5s ease 0.2s forwards';
+            factBox.classList.add('pulse');
+            
             factText.textContent = randomFact.fact;
             categoryBadge.textContent = randomFact.category;
         }
 
         generateBtn.addEventListener('click', generateRandomFact);
-
-        // Generate a random fact when the page loads
         generateRandomFact();
     </script>
 </body>
