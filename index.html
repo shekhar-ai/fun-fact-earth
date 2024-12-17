@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earth Facts Generator</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #1a1a1a, #2c3e50);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+
+        .fact-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #fact-text {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        #category-badge {
+            background: #3498db;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        #generate-btn {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #generate-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Earth Facts Generator</h1>
+        <div class="fact-box">
+            <p id="fact-text">Click the button to generate a fact!</p>
+            <span id="category-badge"></span>
+        </div>
+        <button id="generate-btn">Generate New Fact</button>
+    </div>
+
+    <script>
+        const earthFacts = {
+            "earthFacts": [
+                {
+                    "id": 1,
+                    "fact": "Earth is the third planet from the Sun in our Solar System",
+                    "category": "astronomy"
+                },
+                {
+                    "id": 2,
+                    "fact": "Earth's age is approximately 4.54 billion years",
+                    "category": "geology"
+                },
+                {
+                    "id": 3,
+                    "fact": "The Earth's circumference at the equator is about 40,075 kilometers",
+                    "category": "geography"
+                },
+                {
+                    "id": 4,
+                    "fact": "Earth is the only known planet where life exists",
+                    "category": "biology"
+                },
+                {
+                    "id": 5,
+                    "fact": "71% of Earth's surface is covered by water",
+                    "category": "geography"
+                },
+                {
+                    "id": 6,
+                    "fact": "Earth's atmosphere is composed of 78% nitrogen and 21% oxygen",
+                    "category": "atmosphere"
+                },
+                {
+                    "id": 7,
+                    "fact": "Earth completes one rotation on its axis every 23 hours, 56 minutes and 4 seconds",
+                    "category": "astronomy"
+                },
+                {
+                    "id": 8,
+                    "fact": "The highest point on Earth is Mount Everest at 8,848 meters above sea level",
+                    "category": "geography"
+                },
+                {
+                    "id": 9,
+                    "fact": "Earth's core temperature can reach up to 5,400°C (9,752°F)",
+                    "category": "geology"
+                },
+                {
+                    "id": 10,
+                    "fact": "Earth has one natural satellite: the Moon",
+                    "category": "astronomy"
+                }
+            ]
+        };
+
+        const factText = document.getElementById('fact-text');
+        const categoryBadge = document.getElementById('category-badge');
+        const generateBtn = document.getElementById('generate-btn');
+
+        function generateRandomFact() {
+            const facts = earthFacts.earthFacts;
+            const randomIndex = Math.floor(Math.random() * facts.length);
+            const randomFact = facts[randomIndex];
+            
+            factText.textContent = randomFact.fact;
+            categoryBadge.textContent = randomFact.category;
+        }
+
+        generateBtn.addEventListener('click', generateRandomFact);
+
+        // Generate a random fact when the page loads
+        generateRandomFact();
+    </script>
+</body>
+</html>
